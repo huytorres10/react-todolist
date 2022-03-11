@@ -1,0 +1,21 @@
+.task-item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.task-item--value {
+	margin: 0 20px;
+	width: 200px;
+}
+.icon-recycle-bin {
+	margin-left: 20px;
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
