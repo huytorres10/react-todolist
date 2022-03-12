@@ -16,24 +16,27 @@ class App extends React.Component {
 	addTask = () => {
 		if (this.state.taskName) {
 			const tasks = this.state.tasks;
-			tasks.push(this.state.taskName);
+			const taskId = tasks.length === 0 ? 0 : tasks[tasks.length - 1].id + 1;
+			tasks.push({ value: this.state.taskName, id: taskId, done: false });
 			this.setState({ tasks });
 		}
 		this.setState({ taskName: "" });
 	};
 	addMemo = (value) => {};
 
-	onDeleteTask = (e) => {
-		const taskName = e.props.taskName;
-		const newTasks = this.state.tasks.filter((x) => x !== taskName);
+	onDeleteTask = (id) => {
+		const newTasks = this.state.tasks.filter((x) => x.id !== id);
 		this.setState({ tasks: newTasks });
 	};
 
-	onDoneTask = (e) => {
-		console.log("onDoneTask", e);
-		this.onDeleteTask(e);
+	onDoneTask = (taskDone) => {
+		const tasks = this.state.tasks;
+		if (taskDone.done) return;
+		tasks.forEach((task) => {
+			if (task.id === taskDone.id) task.done = true;
+		});
 		const tasksDone = this.state.tasksDone;
-		tasksDone.push(e.props.taskName);
+		tasksDone.push(taskDone);
 		this.setState({ tasksDone });
 	};
 
@@ -59,14 +62,14 @@ class App extends React.Component {
 					</div>
 					<br />
 					<ul className="task-list">
-						{this.state.tasks.map((value, index) => {
-							return <ToDo taskName={value} key={index} deleteTask={this.onDeleteTask} doneTask={this.onDoneTask} />;
+						{this.state.tasks.map((task, index) => {
+							return <ToDo task={task} key={index} deleteTask={this.onDeleteTask} doneTask={this.onDoneTask} />;
 						})}
 					</ul>
 					<br />
 					<ul className="task-list-done">
-						{this.state.tasksDone.map((value, index) => {
-							return <TodoDone taskName={value} key={index} />;
+						{this.state.tasksDone.map((task, index) => {
+							return <TodoDone task={task} key={index} />;
 						})}
 					</ul>
 				</header>
