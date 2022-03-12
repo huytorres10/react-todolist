@@ -3,6 +3,14 @@
 	justify-content: flex-start;
 	align-items: center;
 }
+
+.task-item--done {
+	text-decoration: line-through;
+	cursor: auto;
+}
+.task-item--done .icon {
+	cursor: auto;
+}
 .task-item--value {
 	margin: 0 20px;
 	width: 200px;
